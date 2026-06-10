@@ -1,0 +1,1 @@
+select departments.dept_no as numDept,departments.dept_name as nameDept,employees.first_name as NameManager from departments JOIN dept_manager ON departments.dept_no = dept_manager.dept_no JOIN employees ON employees.emp_no = dept_manager.emp_no WHERE dept_manager.to_date > CURRENT_DATE;

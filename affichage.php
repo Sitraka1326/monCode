@@ -21,14 +21,20 @@ $listeDep = afficher_ListeDepartement();
             <th>
                 nom departement
             </th>
+            <th>
+                Manager
+            </th>
         </tr>
         <?php foreach ($listeDep as $dep) { ?>
             <tr>
                 <td>
-                    <?= $dep['dept_no'] ?>
+                    <?= $dep['numDept'] ?>
                 </td>
                 <td>
-                    <?= $dep['dept_name'] ?>
+                    <a href="employe.php?dept_no=<?= $dep['numDept'] ?>"><?= $dep['nameDept'] ?></a>
+                </td>
+                <td>
+                    <?= $dep['NameManager'] ?>
                 </td>
             </tr>
         <?php } ?>

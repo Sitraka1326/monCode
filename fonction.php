@@ -18,7 +18,7 @@ function dbconnect()
 
 function afficher_ListeDepartement(){
 
-    $sql = "select * from departments;";
+    $sql = "select departments.dept_no as numDept,departments.dept_name as nameDept,employees.first_name as NameManager from departments JOIN dept_manager ON departments.dept_no = dept_manager.dept_no JOIN employees ON employees.emp_no = dept_manager.emp_no WHERE dept_manager.to_date > CURRENT_DATE;";
     $news_req = mysqli_query(dbconnect(), $sql);
     $result = array();
     while($new = mysqli_fetch_assoc($news_req)){
@@ -29,6 +29,23 @@ function afficher_ListeDepartement(){
 
 }
 
+function afficheEmplee_Dept($dept_no)
+{
+    $sql = "SELECT departments.dept_no,employees.first_name FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON employees.emp_no = dept_emp.emp_no WHERE departments.dept_no = '$dept_no';";
+
+    $news_req = mysqli_query(dbconnect(), $sql);
+
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
+?>
 
 
 
