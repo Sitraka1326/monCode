@@ -1,7 +1,7 @@
 <?php
 include("fonction.php");
 $dept_no = $_GET['dept_no'];
-$afficherEmployee_Dept = afficheEmplee_Dept($dept_no);
+$afficherEmployee_Dept = afficheEmployee_Dept($dept_no);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,14 +11,15 @@ $afficherEmployee_Dept = afficheEmplee_Dept($dept_no);
     <title>Document</title>
 </head>
 <body>
+    <h1>Departement n° <?= $dept_no ?></h1>
     <table>
         <tr>
-            <th>Numero departement</th>
+            <th>Numero empoye</th>
             <th>Nom employe</th>
         </tr>
         <?php foreach ($afficherEmployee_Dept as $employee) { ?>
             <tr>
-                <td><?= $employee["dept_no"] ?></td>
+                <td><a href="ficheEmploye.php?employe_no=<?= $employee["emp_no"] ?>"><?= $employee["emp_no"] ?></a></td>
                 <td><?= $employee["first_name"] ?></td>
             </tr>
         <?php } ?> 

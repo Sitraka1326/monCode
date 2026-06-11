@@ -29,9 +29,9 @@ function afficher_ListeDepartement(){
 
 }
 
-function afficheEmplee_Dept($dept_no)
+function afficheEmployee_Dept($dept_no)
 {
-    $sql = "SELECT departments.dept_no,employees.first_name FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON employees.emp_no = dept_emp.emp_no WHERE departments.dept_no = '$dept_no';";
+    $sql = "SELECT departments.dept_no,employees.first_name,employees.emp_no FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON employees.emp_no = dept_emp.emp_no WHERE departments.dept_no = '$dept_no';";
 
     $news_req = mysqli_query(dbconnect(), $sql);
 
@@ -45,8 +45,21 @@ function afficheEmplee_Dept($dept_no)
 
     return $result;
 }
-?>
+function affiche_fiche_employe($employe_no)
+{
+    $sql = "SELECT * FROM employees JOIN salaries on employees.emp_no = salaries.emp_no WHERE salaries.emp_no = $employe_no;";
 
+    $news_req = mysqli_query(dbconnect(), $sql);
 
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
 
 ?>

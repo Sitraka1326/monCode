@@ -4,7 +4,6 @@ ini_set('display_errors', 1);
 include('fonction.php');
 $listeDep = afficher_ListeDepartement();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
