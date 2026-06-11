@@ -61,5 +61,65 @@ function affiche_fiche_employe($employe_no)
 
     return $result;
 }
+function liste_age()
+{
+    $sql = "SELECT DISTINCT (YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age  FROM employees ORDER BY Age ASC ;";
+
+    $news_req = mysqli_query(dbconnect(), $sql);
+
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
+function liste_recherche($depart,$firstName,$lastName,$AgeMin, $AgeMax)
+{
+    if ($AgeMin > 0 && $AgeMax > 0) {
+        $sql = "SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%$depart%' OR first_name LIKE '%$firstName%' OR last_name LIKE '%$lastName%' AND ((YEAR(CURRENT_DATE) - YEAR(birth_date)) < $AgeMax AND (YEAR(CURRENT_DATE) - YEAR(birth_date)) > $AgeMin LIMIT 20);";
+    }
+    else {
+        $sql = "SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%$depart%' OR first_name LIKE '%$firstName%' OR last_name LIKE '%$lastName%' LIMIT 20;";
+    }
+
+    $news_req = mysqli_query(dbconnect(), $sql);
+
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
+function liste_rechercheplus20($depart,$firstName,$lastName,$AgeMin, $AgeMax,$limite)
+{
+    if ($AgeMin > 0 && $AgeMax > 0) {
+        $sql = "SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%$depart%' OR first_name LIKE '%$firstName%' OR last_name LIKE '%$lastName%' AND ((YEAR(CURRENT_DATE) - YEAR(birth_date)) < $AgeMax AND (YEAR(CURRENT_DATE) - YEAR(birth_date)) > $AgeMin LIMIT $limite,20);";
+    }
+    else {
+        $sql = "SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%$depart%' OR first_name LIKE '%$firstName%' OR last_name LIKE '%$lastName%' LIMIT $limite,20;";
+    }
+
+    $news_req = mysqli_query(dbconnect(), $sql);
+
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
+
+
 
 ?>
