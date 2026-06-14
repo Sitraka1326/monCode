@@ -6,34 +6,52 @@ $ficheEmploye = affiche_fiche_employe($employe_no);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Site de vente</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/font/bootstrap-icons.css">
 </head>
-<body>
-    <h1>FICHE D'EMPLOYEE</h1>
-    <h3>NOM: <?= $ficheEmploye[0]['first_name'] ?></h3>
-    <h3>PRENOM: <?= $ficheEmploye[0]['last_name'] ?></h3>
-    <h3>NUMPERO EMPLOYE: <?= $ficheEmploye[0]['emp_no'] ?></h3>
-    <h3>GENRE: <?= $ficheEmploye[0]['gender'] ?></h3>
-    <h3>DATE DE NAISSANCE: <?= $ficheEmploye[0]['birth_date'] ?></h3>
-    <h3>DATE DE d'EMBAUCHE: <?= $ficheEmploye[0]['hire_date'] ?></h3>
-    <h3>HISTORIQUE DE SALAIRE</h3>
-    <table border=1>
-        <tr>
-            <th>Montant salaire</th>
-            <th>Date de debut</th>
-            <th>Date de fin</th>
-        </tr>
-        <?php foreach ($ficheEmploye as $employe) { ?>
-        <tr>
-            <th><?= $employe['salary'] ?></th>
-            <th><?= $employe['from_date'] ?></th>
-            <th><?= (strtotime($employe['to_date']) > strtotime(date("Y-m-d"))) ? "indetrminee" : $employe['to_date']; ?></th>
-        </tr>
-        <?php } ?>
-        
-    </table>
+
+<body class="bg-secondary">
+    <div class="container">
+        <h1 class="text-center">FICHE D'EMPLOYEE</h1>
+        <div class="row border border-white rounded-5">
+            <div class="col-md-6">
+                <div class="row mx-auto mt-5">
+                    <div class="div colm-md-12 bg-white rounded-4">
+                        <h3><span class="text text-secondary">NOM: </span><?= $ficheEmploye[0]['first_name'] ?></h3>
+                        <h3><span class="text text-secondary">PRENOM: </span><?= $ficheEmploye[0]['last_name'] ?></h3>
+                        <h3><span class="text text-secondary">NUMERO EMPLOYE: </span><?= $ficheEmploye[0]['emp_no'] ?></h3>
+                        <h3><span class="text text-secondary">GENRE: </span><?= $ficheEmploye[0]['gender'] ?></h3>
+                        <h3><span class="text text-secondary">DATE DE NAISSANCE: </span><?= $ficheEmploye[0]['birth_date'] ?></h3>
+                        <h3><span class="text text-secondary">DATE DE d'EMBAUCHE: </span><?= $ficheEmploye[0]['hire_date'] ?></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <h3 class="text-center">HISTORIQUE DE SALAIRE</h3>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Montant salaire</th>
+                        <th>Date de debut</th>
+                        <th>Date de fin</th>
+                    </tr>
+                    <?php foreach ($ficheEmploye as $employe) { ?>
+                        <tr>
+                            <th><?= $employe['salary'] ?></th>
+                            <th><?= $employe['from_date'] ?></th>
+                            <th><?= (strtotime($employe['to_date']) > strtotime(date("Y-m-d"))) ? "indetrminee" : $employe['to_date']; ?></th>
+                        </tr>
+                    <?php } ?>
+            </div>
+        </div>
+        </table>
+    </div>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

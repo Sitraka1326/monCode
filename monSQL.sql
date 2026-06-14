@@ -5,4 +5,4 @@ SELECT * FROM employees JOIN salaries on employees.emp_no = salaries.emp_no WHER
 
 SELECT DISTINCT (YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age  FROM employees ORDER BY Age ASC ;
 
-SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%est%' OR first_name LIKE '%Part%' OR last_name LIKE '%ga%' OR ((YEAR(CURRENT_DATE) - YEAR(birth_date)) < 80 AND (YEAR(CURRENT_DATE) - YEAR(birth_date)) > 60);
+SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no  WHERE (dept_name LIKE '%est%' OR first_name LIKE '%Part%' OR last_name LIKE '%ga%' OR ((YEAR(CURRENT_DATE) - YEAR(birth_date)) < 80 AND (YEAR(CURRENT_DATE) - YEAR(birth_date)) > 60 )) LIMIT 2;

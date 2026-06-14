@@ -80,7 +80,7 @@ function liste_age()
 function liste_recherche($depart,$firstName,$lastName,$AgeMin, $AgeMax)
 {
     if ($AgeMin > 0 && $AgeMax > 0) {
-        $sql = "SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%$depart%' OR first_name LIKE '%$firstName%' OR last_name LIKE '%$lastName%' AND ((YEAR(CURRENT_DATE) - YEAR(birth_date)) < $AgeMax AND (YEAR(CURRENT_DATE) - YEAR(birth_date)) > $AgeMin LIMIT 20);";
+        $sql = "SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%$depart%' OR first_name LIKE '%$firstName%' OR last_name LIKE '%$lastName%' AND ((YEAR(CURRENT_DATE) - YEAR(birth_date)) < $AgeMax AND (YEAR(CURRENT_DATE) - YEAR(birth_date)) > $AgeMin )LIMIT 20;";
     }
     else {
         $sql = "SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%$depart%' OR first_name LIKE '%$firstName%' OR last_name LIKE '%$lastName%' LIMIT 20;";
@@ -101,7 +101,7 @@ function liste_recherche($depart,$firstName,$lastName,$AgeMin, $AgeMax)
 function liste_rechercheplus20($depart,$firstName,$lastName,$AgeMin, $AgeMax,$limite)
 {
     if ($AgeMin > 0 && $AgeMax > 0) {
-        $sql = "SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%$depart%' OR first_name LIKE '%$firstName%' OR last_name LIKE '%$lastName%' AND ((YEAR(CURRENT_DATE) - YEAR(birth_date)) < $AgeMax AND (YEAR(CURRENT_DATE) - YEAR(birth_date)) > $AgeMin LIMIT $limite,20);";
+        $sql = "SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%$depart%' OR first_name LIKE '%$firstName%' OR last_name LIKE '%$lastName%' AND ((YEAR(CURRENT_DATE) - YEAR(birth_date)) < $AgeMax AND (YEAR(CURRENT_DATE) - YEAR(birth_date)) > $AgeMin)LIMIT $limite,20;";
     }
     else {
         $sql = "SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%$depart%' OR first_name LIKE '%$firstName%' OR last_name LIKE '%$lastName%' LIMIT $limite,20;";
