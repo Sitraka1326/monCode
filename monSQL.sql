@@ -1,8 +1,5 @@
-SELECT departments.dept_no,employees.first_name,employees.emp_no FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON employees.emp_no = dept_emp.emp_no WHERE departments.dept_no = 'd009';
+-- creation de v_listeDepartement
+CREATE OR REPLACE VIEW v_listeDepartement AS (SELECT DISTINCT(dept_no) as numDept ,(SELECT COUNT(emp_no) FROM dept_emp WHERE numDept = dept_no) as nbEmployee FROM dept_emp) ;
 
-SELECT * FROM salaries;
-SELECT * FROM employees JOIN salaries on employees.emp_no = salaries.emp_no WHERE salaries.emp_no = 10005;
 
-SELECT DISTINCT (YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age  FROM employees ORDER BY Age ASC ;
-
-SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no  WHERE (dept_name LIKE '%est%' OR first_name LIKE '%Part%' OR last_name LIKE '%ga%' OR ((YEAR(CURRENT_DATE) - YEAR(birth_date)) < 80 AND (YEAR(CURRENT_DATE) - YEAR(birth_date)) > 60 )) LIMIT 2;
+SELECT departments.dept_name,MAX(DATEDIFF(dept_emp.to_date,dept_emp.from_date)) as deptLong FROM employees JOIN salaries on employees.emp_no = salaries.emp_no JOIN dept_emp ON dept_emp.emp_no = employees.emp_no JOIN departments ON departments.dept_no = dept_emp.dept_no WHERE salaries.emp_no = 10088 ;

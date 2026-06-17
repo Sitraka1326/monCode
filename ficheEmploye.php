@@ -3,6 +3,8 @@ include("fonction.php");
 date_default_timezone_set("Africa/Nairobi");
 $employe_no = $_GET['employe_no'];
 $ficheEmploye = affiche_fiche_employe($employe_no);
+$departement_recent = departement_recent($employe_no);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,6 +29,8 @@ $ficheEmploye = affiche_fiche_employe($employe_no);
                         <h3><span class="text text-secondary">PRENOM: </span><?= $ficheEmploye[0]['last_name'] ?></h3>
                         <h3><span class="text text-secondary">NUMERO EMPLOYE: </span><?= $ficheEmploye[0]['emp_no'] ?></h3>
                         <h3><span class="text text-secondary">GENRE: </span><?= $ficheEmploye[0]['gender'] ?></h3>
+                        <h3><span class="text text-secondary">Departement: </span><?= $ficheEmploye[0]['dept_name'] ?></h3>
+                        <h3><span class="text text-secondary">Departement le plus long: </span><?= $departement_recent[0]['dept_name']?></h3>
                         <h3><span class="text text-secondary">DATE DE NAISSANCE: </span><?= $ficheEmploye[0]['birth_date'] ?></h3>
                         <h3><span class="text text-secondary">DATE DE d'EMBAUCHE: </span><?= $ficheEmploye[0]['hire_date'] ?></h3>
                     </div>

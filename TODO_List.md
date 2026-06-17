@@ -11,36 +11,46 @@
     - index.php (Menu Principal)
         - Utilisation Bootstrap (container,row,col,...)
 
-        - Liens vers Liste Departements
-            - fonction.php
-                - requette affiche liste Departement (afficher_ListeDepartement())
-                - ajout dans la requettte colonne Manager (JOIN ... ON EN SQL)
-            - affichage.php (liste des departements)
-                - tableau des liste Departement 
-                - ajout colonne Mananger
+    - Liens vers Liste Departements
+        - fonction.php
+            - requette affiche liste Departement (afficher_ListeDepartement())
+            - ajout dans la requettte colonne Manager (JOIN ... ON EN SQL)
+            - modifier la requette avec (sous select,DISTINCT ('dept_no'), COUNT('emp_no'))
+        - affichage.php (liste des departements)
+            - tableau des liste Departement 
+            - ajout colonne Mananger
+            - ajout colonne nombre Employee
 
-        - Liens  sur les Departements vers Liste des Employees de ce departement
-            - fonction.php
-                - requette affiche listes des employees du departement afficheEmployee_Dept($dept_no) 
-            - affichage.php  Listes des Employees du departement
-                - tableau des liste listes Employee Departement (avec GET['depart'])
+    - Liens  sur les Departements vers Liste des Employees de ce departement
+        - fonction.php
+            - requette affiche listes des employees du departement afficheEmployee_Dept($dept_no) 
+        - affichage.php  Listes des Employees du departement
+            - tableau des liste listes Employee Departement (avec GET['depart'])
 
-        - Liens sur Employee vers page fiche Employee
-            - fonction.php
-                - requette affiche fiche Employee (fiche_fiche_employe($employe_no))
-                - ajout du historique Salaire au requette (JOIN ... ON EN SQL)
-            - affichage fiche Employee
-                - page fiche Employee (nom,prenom,departement,numeroEmploye) avec GET
-                - ajout tableau historique salaire
+    - Liens sur Employee vers page fiche Employee
+        - fonction.php
+            - requette affiche fiche Employee (fiche_fiche_employe($employe_no))
+            - ajout du historique Salaire au requette (JOIN ... ON EN SQL)
+            - ajout requette departement le plus long avec en SQL (MAX,DATEDIFF)
+        - affichage fiche Employee
+            - page fiche Employee (nom,prenom,departement,numeroEmploye) avec GET
+            - ajout tableau historique salaire
+            - mettre departement le plus long
 
-        - Page formulaire de recherche
-            - fonction.php
-                - requette affiche recherche departement, nom employé, age min et max utiliser (LIKE, AND, OR EN SQL)
-                - limiter par 20 lignes avec LIMIT avec SQl
-            - affichage resultat recherche
-                - tableau resultat du requette recherche
-                - limit 20 lignes avec liens sur la meme page avec GET(nom,prenom,departement,numeroEmploye,plus20)
-            
+    - Page formulaire de recherche
+        - fonction.php
+            - requette affiche recherche departement, nom employé, age min et max utiliser (LIKE, AND, OR EN SQL)
+            - limiter par 20 lignes avec LIMIT avec SQl
+        - affichage resultat recherche
+            - tableau resultat du requette recherche
+            - limit 20 lignes avec liens sur la meme page avec GET(nom,prenom,departement,numeroEmploye,plus20)
+    - Page (nombre M/F et Salaire Moyen)
+        - fonction.php
+            - ajout requette compte nb employee Homme/Femme(COUNT)
+            - ajout requette compte salaire moyen (AVG)
+        - affichage
+            - tableau nombre d'employee H/F
+            - tableau salaire moyen
 
-            
+        
 

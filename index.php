@@ -16,6 +16,8 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item" ><a class="nav-link" href="affichage.php">liste departement</a></li>
                 <li class="nav-item" ><a class="nav-link" href="form.php">Recherche</a></li>
+                <li class="nav-item" ><a class="nav-link" href="gender_MoySalaire.php">Liste Genre/Salaire</a></li>
+                
             </ul>
         </div>
     </nav>

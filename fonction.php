@@ -18,7 +18,7 @@ function dbconnect()
 
 function afficher_ListeDepartement(){
 
-    $sql = "select departments.dept_no as numDept,departments.dept_name as nameDept,employees.first_name as NameManager from departments JOIN dept_manager ON departments.dept_no = dept_manager.dept_no JOIN employees ON employees.emp_no = dept_manager.emp_no WHERE dept_manager.to_date > CURRENT_DATE;";
+    $sql = "select departments.dept_no as numDept,departments.dept_name as nameDept,employees.first_name as NameManager, `v_listeDepartement`.`nbEmployee` as `nbEmployee` from departments JOIN dept_manager ON departments.dept_no = dept_manager.dept_no JOIN employees ON employees.emp_no = dept_manager.emp_no JOIN `v_listeDepartement` ON departments.dept_no = `v_listeDepartement`.`numDept` WHERE dept_manager.to_date > CURRENT_DATE;";
     $news_req = mysqli_query(dbconnect(), $sql);
     $result = array();
     while($new = mysqli_fetch_assoc($news_req)){
@@ -47,7 +47,7 @@ function afficheEmployee_Dept($dept_no)
 }
 function affiche_fiche_employe($employe_no)
 {
-    $sql = "SELECT * FROM employees JOIN salaries on employees.emp_no = salaries.emp_no WHERE salaries.emp_no = $employe_no;";
+    $sql = "SELECT * FROM employees JOIN salaries on employees.emp_no = salaries.emp_no JOIN dept_emp ON dept_emp.emp_no = employees.emp_no JOIN departments ON departments.dept_no = dept_emp.dept_no WHERE salaries.emp_no = $employe_no;";
 
     $news_req = mysqli_query(dbconnect(), $sql);
 
@@ -106,6 +106,73 @@ function liste_rechercheplus20($depart,$firstName,$lastName,$AgeMin, $AgeMax,$li
     else {
         $sql = "SELECT dept_name,first_name,last_name,(YEAR(CURRENT_DATE) - YEAR(birth_date)) as Age FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN employees ON dept_emp.emp_no = employees.emp_no WHERE dept_name LIKE '%$depart%' OR first_name LIKE '%$firstName%' OR last_name LIKE '%$lastName%' LIMIT $limite,20;";
     }
+
+    $news_req = mysqli_query(dbconnect(), $sql);
+
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
+
+function nb_employee_deprt()
+{
+    $sql = "SELECT DISTINCT(dept_no) as numDept ,(SELECT COUNT(emp_no) FROM dept_emp WHERE numDept = dept_no) as nbEmployee FROM dept_emp ;";
+
+    $news_req = mysqli_query(dbconnect(), $sql);
+
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
+
+function nb_employee_genre()
+{
+    $sql = "SELECT DISTINCT(gender) as genre,(SELECT COUNT(emp_no) FROM employees WHERE gender = genre) as nbEmployee FROM employees;";
+
+    $news_req = mysqli_query(dbconnect(), $sql);
+
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
+function moyenne_salaire()
+{
+    $sql = "SELECT departments.dept_name as nomDept, (SELECT AVG(salary) FROM salaries WHERE salaries.emp_no = dept_emp.emp_no) as salaireMoy FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN salaries ON dept_emp.emp_no = salaries.emp_no GROUP BY departments.dept_no;";
+
+    $news_req = mysqli_query(dbconnect(), $sql);
+
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
+
+function departement_recent($no_emp)
+{
+    $sql = "SELECT departments.dept_name,MAX(DATEDIFF(dept_emp.to_date,dept_emp.from_date)) FROM employees JOIN salaries on employees.emp_no = salaries.emp_no JOIN dept_emp ON dept_emp.emp_no = employees.emp_no JOIN departments ON departments.dept_no = dept_emp.dept_no WHERE salaries.emp_no = $no_emp ;";
 
     $news_req = mysqli_query(dbconnect(), $sql);
 

@@ -1,9 +1,7 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 include('fonction.php');
-$listeDep = afficher_ListeDepartement();
-$nbDepartement = nb_employee_deprt();
+$nbEmployee_genre = nb_employee_genre();
+$salaireMoyenne = moyenne_salaire();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,37 +17,45 @@ $nbDepartement = nb_employee_deprt();
 
 <body class="bg-secondary">
     <div class="container">
-        <h1 class="text-center">LISTE DE DEPARTEMENT</h1>
+        <h1 class="text-center">NOMBRE EMPLOYEE ET SALAIRE MOYEN</h1>
         <div class="row">
             <div class="col-md-12 mt-5">
                 <table class="table table-bordered ">
                     <tr>
                         <th>
-                            numero
+                            Genre
                         </th>
                         <th>
-                            nom departement
-                        </th>
-                        <th>
-                            Manager
-                        </th>
-                        <th>
-                            Nombre Emoloyee
+                            Nombre Employee
                         </th>
                     </tr>
-                    <?php foreach ($listeDep as $dep) { ?>
+                    <?php foreach ($nbEmployee_genre as $genre) { ?>
                         <tr>
                             <td>
-                                <?= $dep['numDept'] ?>
+                                <?= $genre['genre'] ?>
                             </td>
                             <td>
-                                <a href="employe.php?dept_no=<?= $dep['numDept'] ?>"><?= $dep['nameDept'] ?></a>
+                                <?= $genre['nbEmployee'] ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </table>
+                <table class="table table-bordered ">
+                    <tr>
+                        <th>
+                            Genre
+                        </th>
+                        <th>
+                            Nombre Employee
+                        </th>
+                    </tr>
+                    <?php foreach ($salaireMoyenne as $salaire) { ?>
+                        <tr>
+                            <td>
+                                <?= $salaire['nomDept'] ?>
                             </td>
                             <td>
-                                <?= $dep['NameManager'] ?>
-                            </td>
-                            <td>
-                                <?= $dep['nbEmployee'] ?>
+                                <?= $salaire['salaireMoy'] ?>
                             </td>
                         </tr>
                     <?php } ?>
