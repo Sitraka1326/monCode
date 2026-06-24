@@ -54,6 +54,16 @@ $departement_recent = departement_recent($employe_no);
             </div>
         </div>
         </table>
+        <div>
+            <form action="changer_dept.php" method="GET">
+                <input type="hidden" name="emp_no" value="<?php echo $employe_no ?>"  >
+                <button type="submit" class="btn btn-primary btn-lg">Choisir un nouveau departement</button>
+            </form>
+            <form action="devenirManager.php" method="GET">
+                <input type="hidden" name="emp_no" value="<?php echo $employe_no ?>"  >
+                <button type="submit" class="btn btn-primary btn-lg">Devenir Manager</button>
+            </form>
+        </div>
     </div>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -120,39 +120,6 @@ function liste_rechercheplus20($depart,$firstName,$lastName,$AgeMin, $AgeMax,$li
     return $result;
 }
 
-function nb_employee_deprt()
-{
-    $sql = "SELECT DISTINCT(dept_no) as numDept ,(SELECT COUNT(emp_no) FROM dept_emp WHERE numDept = dept_no) as nbEmployee FROM dept_emp ;";
-
-    $news_req = mysqli_query(dbconnect(), $sql);
-
-    $result = array();
-
-    while ($news = mysqli_fetch_assoc($news_req)) {
-        $result[] = $news;
-    }
-
-    mysqli_free_result($news_req);
-
-    return $result;
-}
-
-function nb_employee_genre()
-{
-    $sql = "SELECT DISTINCT(gender) as genre,(SELECT COUNT(emp_no) FROM employees WHERE gender = genre) as nbEmployee FROM employees;";
-
-    $news_req = mysqli_query(dbconnect(), $sql);
-
-    $result = array();
-
-    while ($news = mysqli_fetch_assoc($news_req)) {
-        $result[] = $news;
-    }
-
-    mysqli_free_result($news_req);
-
-    return $result;
-}
 function moyenne_salaire()
 {
     $sql = "SELECT departments.dept_name as nomDept, (SELECT AVG(salary) FROM salaries WHERE salaries.emp_no = dept_emp.emp_no) as salaireMoy FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN salaries ON dept_emp.emp_no = salaries.emp_no GROUP BY departments.dept_no;";
@@ -187,6 +154,96 @@ function departement_recent($no_emp)
     return $result;
 }
 
+function nb_employee_deprt()
+{
+    $sql = "SELECT DISTINCT(dept_no) as numDept ,(SELECT COUNT(emp_no) FROM dept_emp WHERE numDept = dept_no) as nbEmployee FROM dept_emp ;";
+
+    $news_req = mysqli_query(dbconnect(), $sql);
+
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
+
+function nb_employee_genre()
+{
+    $sql = "SELECT DISTINCT(gender) as genre,(SELECT COUNT(emp_no) FROM employees WHERE gender = genre) as nbEmployee FROM employees;";
+
+    $news_req = mysqli_query(dbconnect(), $sql);
+
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
+
+
+function get_dep(){
+    $sql = "select * from departments ;";
+
+    $news_req = mysqli_query(dbconnect(), $sql);
+
+    $result = array();
+
+    while ($news = mysqli_fetch_assoc($news_req)) {
+        $result[] = $news;
+    }
+
+    mysqli_free_result($news_req);
+
+    return $result;
+}
+
+function modifier_dep($departement,$emp_no, $date_debut){
+    $sql1 = "select from_date from dept_emp where emp_no = '$emp_no' and to_date = '9999-01-01' ";
+    $req1 = mysqli_query(dbconnect(),$sql1);
+    $row = mysqli_fetch_assoc($req1);
+    $from_date_actuel = $row['from_date'];
+
+    if($date_debut < $from_date_actuel ){
+        return "Erruer : la date de debut est anterieure a la date du departement actuel ($from_date_actuel)";
+    }
+
+    $sql2 = "update dept_emp set to_date = curdate() where emp_no = '$emp_no' and to_date = '9999-01-01'; ";
+    mysqli_query(dbconnect(), $sql2);
+
+    $sql3 = "insert into dept_emp (emp_no, dept_no, from_date, to_date)
+            values ('$emp_no', '$departement', '$date_debut', '9999-01-01'); ";
+    mysqli_query(dbconnect(),$sql3);
+    return "ok";
+
+}
+function modifier_manager($departement,$emp_no, $date_debut){
+    $sql1 = "SELECT * FROM dept_manager WHERE dept_no = '$departement' AND YEAR(to_date) = '9999' ";
+    $req1 = mysqli_query(dbconnect(),$sql1);
+    $row = mysqli_fetch_assoc($req1);
+    $ancien_manager = $row['emp_no'];
+    $from_date_actuel = $row['from_date'];
+
+    if($date_debut < $from_date_actuel ){
+        return "Erruer : la date de debut est anterieure a la date du departement actuel ($from_date_actuel)";
+    }
+
+    $sql2 = "UPDATE dept_manager set to_date = '$date_debut' WHERE emp_no = $ancien_manager; ";
+    mysqli_query(dbconnect(), $sql2);
+
+    $sql3 = "INSERT INTO dept_manager (emp_no, dept_no, from_date, to_date)
+            VALUES ($emp_no, '$departement', '$date_debut', '9999-01-01'); ";
+    mysqli_query(dbconnect(),$sql3);
+    return "ok";
+
+}
 
 
 ?>
